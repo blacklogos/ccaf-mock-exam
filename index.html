@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>CCAF Mock Exam — Claude Certified Architect Foundations practice</title>
+<meta name="description" content="A free, browser-based mock exam for the Claude Certified Architect — Foundations (CCAF) credential. 60 questions, 120-minute proctor-style timer, 1000-point scoring, with explanations on review." />
+<meta name="theme-color" content="#d97706" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="container topbar-inner">
+    <a class="brand" href="#top">
+      <div class="brand-mark">CC</div>
+      <div class="brand-text">
+        <div class="brand-name">CCAF Mock</div>
+        <div class="brand-sub">Practice exam · unofficial</div>
+      </div>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#topics">Topics</a>
+      <a href="#path">Path</a>
+      <a href="#start">Start</a>
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">Unofficial · community-built</span>
+          <h1>Practice for the <span class="accent">Claude Certified Architect</span> exam, in your browser.</h1>
+          <p class="hero-lead">Sixty multiple-choice questions across the same scenario domains as the real exam — research pipelines, code exploration, customer support, and extraction pipelines. Two-hour timed run or untimed study mode. Explanations on every option after you submit.</p>
+          <div class="hero-cta">
+            <button class="btn btn-primary btn-lg js-start-timed">
+              Start timed exam
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </button>
+            <button class="btn btn-ghost btn-lg js-start-untimed">Untimed practice</button>
+          </div>
+          <p class="muted" style="font-size:.86rem;margin-top:18px">No account, no tracking, no server — your answers stay in this tab.</p>
+        </div>
+
+        <aside class="hero-card">
+          <div>
+            <span class="eyebrow">Exam shape</span>
+            <div class="stat-grid" style="margin-top:8px">
+              <div class="stat">
+                <div class="stat-num"><span id="stat-qcount">60</span></div>
+                <div class="stat-label">Questions</div>
+              </div>
+              <div class="stat">
+                <div class="stat-num">120</div>
+                <div class="stat-label">Minutes</div>
+              </div>
+              <div class="stat">
+                <div class="stat-num">1000</div>
+                <div class="stat-label">Point scale</div>
+              </div>
+              <div class="stat">
+                <div class="stat-num">700</div>
+                <div class="stat-label">Pass mark*</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="stat-row"><span class="k">Format</span><span class="v">Multiple choice (1 of 4)</span></div>
+            <div class="stat-row"><span class="k">Weighting</span><span class="v">Equal per question</span></div>
+            <div class="stat-row"><span class="k">Review</span><span class="v">Explanations after submit</span></div>
+            <div class="stat-row"><span class="k">Mode</span><span class="v">Continuous, no breaks</span></div>
+          </div>
+          <p class="muted" style="font-size:.78rem;margin:0">*The official pass mark is not public — 700 / 1000 is used as a working benchmark for self-assessment only.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">About this mock</span>
+        <h2>What you'll be tested on</h2>
+        <p>The exam covers four scenario domains drawn from real architectural work with Claude. Each question is a small case study with one best answer — picked for the shape of the architectural decision, not for trivia.</p>
+      </div>
+
+      <div id="topics" class="cards">
+        <div class="card">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          </div>
+          <h3>Research pipelines</h3>
+          <p>Multi-agent retrieval, citation grounding, sub-agent isolation, state restoration after partial runs.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 6-6 6 6 6M16 6l6 6-6 6"/></svg>
+          </div>
+          <h3>Code exploration</h3>
+          <p>Tool granularity, side-effect tiers, refactor invariants, replayable transcripts, prompt-injection defense.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h3>Customer support</h3>
+          <p>Intent routing, PII boundaries, refund-tool authority, brand voice, hand-off payloads, latency.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          </div>
+          <h3>Extraction pipelines</h3>
+          <p>Schema versioning, evidence-span grounding, idempotency, sampling-based audit, two-tier model routing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Path -->
+  <section id="path" class="section" style="background:var(--bg-soft); border-block:1px solid var(--line)">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">For partner companies</span>
+        <h2>The official certification path</h2>
+        <p>This mock is independent. The real CCAF credential is awarded by Anthropic to architects at partner organizations who complete the official learning path and pass the proctored exam.</p>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="step-num"></div><div><h4>Apply to the Claude Partner Network</h4><p>Your company submits a partnership application; partners get access to the Claude Academy for their teams.</p></div></div>
+        <div class="step"><div class="step-num"></div><div><h4>Get Academy access</h4><p>Once approved, request access with your company email and you'll be enrolled in the learning path.</p></div></div>
+        <div class="step"><div class="step-num"></div><div><h4>Complete the learning path</h4><p>Work through the official modules: prompt design, tool use, multi-agent orchestration, evaluation, safety.</p></div></div>
+        <div class="step"><div class="step-num"></div><div><h4>Validate cohort completion</h4><p>Partners typically validate completion across a small cohort of architects from the same organization.</p></div></div>
+        <div class="step"><div class="step-num"></div><div><h4>Sit the proctored exam</h4><p>60 questions, 120 minutes, single continuous session. Tab-switching and external resources are flagged.</p></div></div>
+        <div class="step"><div class="step-num"></div><div><h4>Receive the credential</h4><p>If you pass, you become a Claude Certified Architect — Foundations. Most credentials carry a renewal cycle.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Start -->
+  <section id="start" class="section">
+    <div class="container">
+      <div class="section-header" style="text-align:center;margin-inline:auto">
+        <span class="eyebrow">Pick a mode</span>
+        <h2>Ready when you are.</h2>
+        <p>Same question bank in both modes. Use timed for a realistic dry run; untimed if you want to think through each one.</p>
+      </div>
+      <div class="modes">
+        <button class="mode-card js-start-timed">
+          <span class="badge">Realistic</span>
+          <h3>Timed exam</h3>
+          <p>Sixty questions, 120-minute timer, no pause. Score reveals at the end with per-domain breakdown.</p>
+          <div class="mode-meta">
+            <span>⏱ 120 min</span><span>📋 60 Qs</span><span>🎯 700 / 1000</span>
+          </div>
+        </button>
+        <button class="mode-card js-start-untimed">
+          <span class="badge badge-soft" style="color:var(--ink-2)">Study</span>
+          <h3>Untimed practice</h3>
+          <p>Same questions, no clock. Submit when ready. Best for the first pass through the material.</p>
+          <div class="mode-meta">
+            <span>⏱ No limit</span><span>📋 60 Qs</span><span>📖 Same explanations</span>
+          </div>
+        </button>
+      </div>
+      <p class="muted" style="text-align:center;margin-top:24px;font-size:.88rem">Keyboard: <span class="mono">←/→</span> navigate · <span class="mono">1–4</span> pick · <span class="mono">F</span> flag</p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h4>CCAF Mock</h4>
+          <p>An open, browser-based mock exam for the Claude Certified Architect — Foundations credential. Not affiliated with Anthropic. The 700 / 1000 benchmark is community-set and for self-assessment only.</p>
+        </div>
+        <div>
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="https://docs.claude.com/" target="_blank" rel="noopener noreferrer">Claude documentation</a></li>
+            <li><a href="https://github.com/anthropics/anthropic-cookbook" target="_blank" rel="noopener noreferrer">Anthropic cookbook</a></li>
+            <li><a href="https://www.anthropic.com/" target="_blank" rel="noopener noreferrer">Anthropic.com</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>This site</h4>
+          <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#path">Certification path</a></li>
+            <li><a href="#start">Start exam</a></li>
+          </ul>
+        </div>
+      </div>
+      <p style="margin-top:32px;font-size:.78rem">Open source. Static HTML. No tracking.</p>
+    </div>
+  </footer>
+
+</main>
+
+<!-- Exam shell -->
+<div id="exam-shell" class="exam-shell" role="dialog" aria-modal="true" aria-label="CCAF Mock Exam">
+  <div class="exam-topbar">
+    <div class="exam-progress">
+      <a class="brand" href="#" onclick="event.preventDefault()">
+        <div class="brand-mark">CC</div>
+        <div class="brand-text">
+          <div class="brand-name">Mock exam in progress</div>
+          <div class="brand-sub" id="progress-text">0 / 0</div>
+        </div>
+      </a>
+      <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
+    </div>
+    <div class="exam-actions">
+      <span class="exam-timer" id="exam-timer">--:--</span>
+      <button id="palette-toggle" class="btn btn-ghost btn-sm" aria-label="Toggle palette" style="display:none">☰</button>
+      <button id="submit-btn" class="btn btn-primary btn-sm">Submit</button>
+      <button id="exit-btn" class="btn btn-ghost btn-sm" aria-label="Exit exam">Exit</button>
+    </div>
+  </div>
+
+  <div class="exam-body">
+    <div class="question-pane">
+      <div class="question-inner">
+        <div id="q-header" class="q-header"></div>
+        <div id="q-text" class="q-text"></div>
+        <div id="q-options" class="options"></div>
+        <div class="q-nav">
+          <button id="prev-btn" class="btn btn-ghost">← Previous</button>
+          <button id="next-btn" class="btn btn-ghost">Next →</button>
+        </div>
+      </div>
+    </div>
+
+    <aside id="palette-pane" class="palette-pane" aria-label="Question palette">
+      <div class="palette-title">Questions</div>
+      <div id="palette-grid" class="palette-grid"></div>
+      <div class="palette-legend">
+        <div class="legend-row"><span class="legend-sw"></span><span>Unanswered</span></div>
+        <div class="legend-row"><span class="legend-sw answered"></span><span>Answered</span></div>
+        <div class="legend-row"><span class="legend-sw flagged"></span><span>Flagged</span></div>
+        <div class="legend-row"><span class="legend-sw current"></span><span>Current</span></div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- Submit confirmation modal -->
+<div id="submit-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="submit-title">
+  <div class="modal-card">
+    <h3 id="submit-title">Submit your exam?</h3>
+    <p>Once submitted, you'll see your score and the correct answers with explanations. You can still navigate and review every question.</p>
+    <div class="modal-actions">
+      <button id="submit-cancel" class="btn btn-ghost">Cancel</button>
+      <button id="submit-confirm" class="btn btn-primary">Submit exam</button>
+    </div>
+  </div>
+</div>
+
+<!-- Result overlay -->
+<div id="result-shell" class="exam-shell" style="display:none">
+  <div class="exam-topbar">
+    <div class="exam-progress">
+      <a class="brand" href="#" onclick="event.preventDefault()">
+        <div class="brand-mark">CC</div>
+        <div class="brand-text">
+          <div class="brand-name">Results</div>
+          <div class="brand-sub">CCAF Mock</div>
+        </div>
+      </a>
+    </div>
+    <div class="exam-actions">
+      <button id="result-review" class="btn btn-ghost btn-sm">Review answers</button>
+      <button id="result-retake" class="btn btn-ghost btn-sm">Retake</button>
+      <button id="result-exit" class="btn btn-primary btn-sm">Done</button>
+    </div>
+  </div>
+
+  <div style="overflow-y:auto;flex:1">
+    <div class="result-shell">
+      <div class="result-card">
+        <span class="eyebrow">Final score</span>
+        <div class="result-score" id="result-score">0</div>
+        <p id="result-verdict" style="margin-top:8px;font-size:1.06rem"></p>
+
+        <div class="result-stats">
+          <div class="result-stat">
+            <div class="result-stat-num" id="result-correct">0/0</div>
+            <div class="result-stat-label">Correct</div>
+          </div>
+          <div class="result-stat">
+            <div class="result-stat-num" id="result-pct">0%</div>
+            <div class="result-stat-label">Accuracy</div>
+          </div>
+          <div class="result-stat">
+            <div class="result-stat-num" id="result-flagged">0</div>
+            <div class="result-stat-label">Flagged</div>
+          </div>
+          <div class="result-stat">
+            <div class="result-stat-num" id="result-time">0:00</div>
+            <div class="result-stat-label">Time taken</div>
+          </div>
+        </div>
+
+        <div class="result-breakdown" id="result-breakdown"></div>
+
+        <div class="result-actions">
+          <button class="btn btn-primary" onclick="document.getElementById('result-review').click()">Review every question</button>
+          <button class="btn btn-ghost" onclick="document.getElementById('result-retake').click()">Take another attempt</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
