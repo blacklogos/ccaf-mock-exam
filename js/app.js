@@ -43,14 +43,36 @@
     questions: [],
     bank: [],   // active subset for this run
     idx: 0,
-    answers: {},   // qid -> letter
+    answers: {},
     flagged: new Set(),
-    mode: null,    // "timed" | "untimed"
+    mode: null,         // "timed" | "untimed"
+    setKey: "set1",     // active set
+    setLabel: "Set 1",
     started: 0,
     deadline: 0,
     timerInt: null,
     submitted: false,
   };
+
+  // --- sets metadata ---
+  const SETS = {
+    set1: { file: "data/questions-set1.json", label: "Set 1", desc: "Standard difficulty · 60 Qs" },
+    set2: { file: "data/questions-set2.json", label: "Set 2", desc: "Standard difficulty · alternate form" },
+    set3: { file: "data/questions-set3.json", label: "Set 3", desc: "Hard · edge cases & subtle distractors" },
+  };
+  const SET_KEYS = ["set1", "set2", "set3"];
+  const setKey = "ccaf-set";
+
+  function getSavedSet() {
+    try {
+      const v = localStorage.getItem(setKey);
+      if (v && (SETS[v] || v === "random")) return v;
+    } catch (_) {}
+    return "set1";
+  }
+  function saveSet(v) {
+    try { localStorage.setItem(setKey, v); } catch (_) {}
+  }
 
   // --- group labels ---
   const GROUP_LABELS = {
@@ -60,27 +82,50 @@
     extraction_pipeline: "Extraction Pipelines",
   };
 
-  // --- load bank ---
-  async function loadQuestions() {
+  // --- load bank for a given set key ---
+  const _bankCache = {};
+  async function loadSet(key) {
+    const meta = SETS[key];
+    if (!meta) throw new Error(`Unknown set: ${key}`);
+    if (_bankCache[key]) return _bankCache[key];
+    const r = await fetch(meta.file, { cache: "no-store" });
+    if (!r.ok) throw new Error(`HTTP ${r.status} on ${meta.file}`);
+    const data = await r.json();
+    _bankCache[key] = data;
+    return data;
+  }
+
+  // initial pre-load of Set 1 (for the question count badge)
+  async function bootstrapPreload() {
     try {
-      const r = await fetch("data/questions.json", { cache: "no-store" });
-      if (!r.ok) throw new Error(`HTTP ${r.status}`);
-      state.questions = await r.json();
-      const elc = $("#stat-qcount"); if (elc) elc.textContent = state.questions.length;
+      const data = await loadSet("set1");
+      state.questions = data;
+      const elc = $("#stat-qcount"); if (elc) elc.textContent = data.length;
     } catch (err) {
-      console.error("Failed to load questions:", err);
-      state.questions = [];
+      console.error("Failed to load Set 1:", err);
     }
   }
 
   // --- start exam ---
-  function startExam(mode) {
-    if (!state.questions.length) {
-      alert("Question bank not loaded yet — please wait a moment.");
+  async function startExam(mode) {
+    // resolve set choice (state.setKey is set by the picker; "random" picks now)
+    let chosen = state.setKey;
+    if (chosen === "random") chosen = SET_KEYS[Math.floor(Math.random() * SET_KEYS.length)];
+    let bank;
+    try {
+      bank = await loadSet(chosen);
+    } catch (err) {
+      alert("Failed to load question set: " + err.message);
       return;
     }
+    if (!bank || !bank.length) {
+      alert("Question bank is empty.");
+      return;
+    }
+    state.questions = bank;
+    state.setLabel = SETS[chosen].label;
     state.mode = mode;
-    state.bank = shuffle(state.questions);
+    state.bank = shuffle(bank);
     state.idx = 0;
     state.answers = {};
     state.flagged = new Set();
@@ -159,6 +204,7 @@
     const flagged = state.flagged.has(q.id);
     headerEl.innerHTML = `
       <div class="q-meta">
+        <span class="badge-soft badge">${esc(state.setLabel)}</span>
         <span class="badge-soft badge">Question ${state.idx + 1} / ${state.bank.length}</span>
         <span class="badge-soft badge">${esc(GROUP_LABELS[q.group] || q.group)}</span>
         ${q.topic ? `<span class="badge-soft badge">${esc(q.topic)}</span>` : ""}
@@ -335,10 +381,28 @@
     }
   }
 
+  // --- set picker ---
+  function setActiveSet(key) {
+    state.setKey = key;
+    saveSet(key);
+    $$(".set-card").forEach((c) => c.classList.toggle("active", c.dataset.set === key));
+    const meta = key === "random"
+      ? { label: "Random", desc: "Picked at start of each attempt" }
+      : SETS[key];
+    const lbl = $("#active-set-label");
+    if (lbl && meta) lbl.textContent = meta.label;
+  }
+
   // --- wire up ---
   function wire() {
     $("#theme-toggle").addEventListener("click", () => {
       setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
+    });
+
+    // initial set selection
+    setActiveSet(getSavedSet());
+    $$(".set-card").forEach((c) => {
+      c.addEventListener("click", () => setActiveSet(c.dataset.set));
     });
 
     $$(".js-start-timed").forEach((b) => b.addEventListener("click", () => startExam("timed")));
@@ -391,6 +455,6 @@
   // --- boot ---
   document.addEventListener("DOMContentLoaded", async () => {
     wire();
-    await loadQuestions();
+    await bootstrapPreload();
   });
 })();

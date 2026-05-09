@@ -48,13 +48,13 @@
           <h1>Practice for the <span class="accent">Claude Certified Architect</span> exam, in your browser.</h1>
           <p class="hero-lead">Sixty multiple-choice questions across the same scenario domains as the real exam — research pipelines, code exploration, customer support, and extraction pipelines. Two-hour timed run or untimed study mode. Explanations on every option after you submit.</p>
           <div class="hero-cta">
-            <button class="btn btn-primary btn-lg js-start-timed">
-              Start timed exam
+            <a class="btn btn-primary btn-lg" href="#start">
+              Pick a set & start
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-            </button>
-            <button class="btn btn-ghost btn-lg js-start-untimed">Untimed practice</button>
+            </a>
+            <a class="btn btn-ghost btn-lg" href="#about">What's tested</a>
           </div>
-          <p class="muted" style="font-size:.86rem;margin-top:18px">No account, no tracking, no server — your answers stay in this tab.</p>
+          <p class="muted" style="font-size:.86rem;margin-top:18px">3 sets · 180 questions total · No account, no tracking, no server.</p>
         </div>
 
         <aside class="hero-card">
@@ -62,20 +62,20 @@
             <span class="eyebrow">Exam shape</span>
             <div class="stat-grid" style="margin-top:8px">
               <div class="stat">
+                <div class="stat-num">3</div>
+                <div class="stat-label">Question sets</div>
+              </div>
+              <div class="stat">
+                <div class="stat-num">180</div>
+                <div class="stat-label">Total Qs</div>
+              </div>
+              <div class="stat">
                 <div class="stat-num"><span id="stat-qcount">60</span></div>
-                <div class="stat-label">Questions</div>
+                <div class="stat-label">Per attempt</div>
               </div>
               <div class="stat">
                 <div class="stat-num">120</div>
                 <div class="stat-label">Minutes</div>
-              </div>
-              <div class="stat">
-                <div class="stat-num">1000</div>
-                <div class="stat-label">Point scale</div>
-              </div>
-              <div class="stat">
-                <div class="stat-num">700</div>
-                <div class="stat-label">Pass mark*</div>
               </div>
             </div>
           </div>
@@ -156,9 +156,42 @@
   <section id="start" class="section">
     <div class="container">
       <div class="section-header" style="text-align:center;margin-inline:auto">
-        <span class="eyebrow">Pick a mode</span>
-        <h2>Ready when you are.</h2>
-        <p>Same question bank in both modes. Use timed for a realistic dry run; untimed if you want to think through each one.</p>
+        <span class="eyebrow">Step 1 — pick a question set</span>
+        <h2>Three sets, 180 questions total.</h2>
+        <p>Three independent question banks. Sets 1 and 2 are parallel forms at standard difficulty. Set 3 is harder, with edge cases and subtler distractors. Pick "Random" to roll for variety on each attempt.</p>
+      </div>
+
+      <div class="sets" id="set-picker">
+        <button class="set-card" data-set="set1">
+          <span class="badge">Set 1</span>
+          <h3>Standard A</h3>
+          <p>The original 60-question form. Balanced across all four scenario domains.</p>
+          <div class="mode-meta"><span>📋 60 Qs</span><span>📊 Standard</span></div>
+        </button>
+        <button class="set-card" data-set="set2">
+          <span class="badge">Set 2</span>
+          <h3>Standard B</h3>
+          <p>Alternate form at the same difficulty. Use for retake practice or a fresh signal.</p>
+          <div class="mode-meta"><span>📋 60 Qs</span><span>📊 Standard</span></div>
+        </button>
+        <button class="set-card" data-set="set3">
+          <span class="badge" style="background:#fee2e2;color:#b91c1c">Set 3</span>
+          <h3>Hard</h3>
+          <p>Edge cases, multi-step reasoning, subtler distractors. Stretches your architectural intuition.</p>
+          <div class="mode-meta"><span>📋 60 Qs</span><span>🔥 Harder</span></div>
+        </button>
+        <button class="set-card" data-set="random">
+          <span class="badge badge-soft" style="color:var(--ink-2)">Random</span>
+          <h3>Surprise me</h3>
+          <p>Pick one of the three sets at random each time you start. Best for ongoing daily training.</p>
+          <div class="mode-meta"><span>🎲 Random</span><span>📋 60 Qs</span></div>
+        </button>
+      </div>
+
+      <div class="section-header" style="text-align:center;margin: 48px auto 0">
+        <span class="eyebrow">Step 2 — pick a mode</span>
+        <h2>You'll attempt: <span id="active-set-label">Set 1</span></h2>
+        <p>Use timed for a realistic dry run; untimed if you want to think through each one.</p>
       </div>
       <div class="modes">
         <button class="mode-card js-start-timed">
